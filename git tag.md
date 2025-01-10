@@ -26,6 +26,17 @@ Git tags are like bookmarks or labels that you attach to specific points in your
         }
 
 ```
+# How to revert changes to tag
+*** 1. Create branch from tag *** 
+```bash
+$ git checkout v1.0
+$ git checkout -b feature-from-v1.0 v1.0
+```
+*** 2. Revert your production till tag ***
+```bash
+$ git checkout main
+$ git reset --hard v1.0
+``` 
 
 Tags are a powerful way to mark specific points in your project history, such as release versions, and they work seamlessly across branches.
 
