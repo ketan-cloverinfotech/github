@@ -1,0 +1,53 @@
+name: Monthly email (Gmail)
+
+on:
+  schedule:
+    # 03:30 UTC = 09:00 IST on the 8th of every month
+    - cron: "30 3 8 * *"
+  workflow_dispatch: {}
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: now
+        run: |
+          TZ='Asia/Kolkata' echo "month_year=$(date +'%B %Y')" >> "$GITHUB_OUTPUT"
+
+      - name: Build email body
+        run: |
+          cat > email_body.md <<EOF
+          ## Monthly SBOM & SCA – ${{ steps.now.outputs.month_year }}
+
+          Hi team,
+
+          Please find attached the SBOM and SCA reports for **${{ steps.now.outputs.month_year }}**.
+
+          Thanks,  
+          Ketan
+          EOF
+
+      - name: Send via Gmail SMTP
+        uses: dawidd6/action-send-mail@v6
+        with:
+          # Easiest: one connection URL using your Gmail + App Password
+          connection_url: ${{ secrets.MAIL_CONNECTION }}
+
+          # Or use discrete fields instead (uncomment & set the related secrets):
+          # server_address: smtp.gmail.com
+          # server_port: 465
+          # secure: true
+          # username: ${{ secrets.MAIL_USERNAME }}
+          # password: ${{ secrets.MAIL_APP_PASSWORD }}
+
+          from: "${{ secrets.MAIL_FROM_NAME || 'Ketan Thombare' }} <${{ secrets.MAIL_FROM || 'your_gmail_address@gmail.com' }}>"
+          to: ${{ secrets.MAIL_TO }}
+          subject: "Monthly SBOM & SCA – ${{ steps.now.outputs.month_year }}"
+          convert_markdown: true
+          content_type: text/html
+          html_body: file://email_body.md
+
+          # Attach your reports (edit as needed)
+          attachments: sbom/*.html,sbom/*.json
