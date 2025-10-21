@@ -1,15 +1,5 @@
 # Git rev-parse explained
 
-**User:** Ketan Thombare (ketan.thombare@gmail.com)  
-**Created:** 10/21/2025 8:51:02  
-**Updated:** 10/21/2025 8:54:20  
-**Exported:** 10/21/2025 8:57:37  
-**Link:** [https://chatgpt.com/c/68f6fc1c-566c-8320-b14a-d74b19d7356c](https://chatgpt.com/c/68f6fc1c-566c-8320-b14a-d74b19d7356c)  
-
-## Response:
-Thought for 6s
-
-gotcha—here’s the super-simple version 👇
 
 `git rev-parse` in plain words
 ==============================
@@ -101,4 +91,3 @@ If you want, tell me where you’ll use it (CI, shell script, makefile), and I�
 
 
 ---
-Powered by [ChatGPT Exporter](https://www.chatgptexporter.com)
